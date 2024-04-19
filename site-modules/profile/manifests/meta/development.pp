@@ -4,8 +4,6 @@
 
 class profile::meta::development {
 
-  include profile::devtools
   include profile::mock
-  include profile::packer
 
 }
