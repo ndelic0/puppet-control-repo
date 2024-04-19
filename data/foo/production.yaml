@@ -1,0 +1,2 @@
+---
+profile::admintools::ensure: absent

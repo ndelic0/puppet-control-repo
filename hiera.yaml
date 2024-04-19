@@ -1,0 +1,29 @@
+---
+version: 5
+
+defaults:
+  datadir: "data"
+
+hierarchy:
+  - name: "Secret data: per-node, per-datacenter, common"
+    lookup_key: eyaml_lookup_key # eyaml backend
+    paths:
+      - "%{customer}/secrets/nodes/%{fqdn}.eyaml"  # Include explicit file extension
+      - "%{customer}/secrets/%{deployment_tier}.eyaml"
+      - "%{customer}/secrets/role/%{puppet_role}.eyaml"
+      - "%{customer}/secrets/common.eyaml"
+    options:
+      pkcs7_private_key: /etc/puppetlabs/puppet/keys/private_key.pkcs7.pem
+      pkcs7_public_key:  /etc/puppetlabs/puppet/keys/public_key.pkcs7.pem
+  - name: 'Yaml backend'
+    data_hash: yaml_data
+    paths:
+      - "%{customer}/nodes/%{fqdn}.yaml"
+      - "%{customer}/roles/%{deployment_tier}/%{datacenter}/%{puppet_role}.yaml"
+      - "%{customer}/roles/%{deployment_tier}/%{puppet_role}.yaml"
+      - "%{customer}/roles/%{puppet_role}.yaml"
+      - "%{customer}/%{datacenter}/%{deployment_tier}.yaml"
+      - "%{customer}/%{datacenter}.yaml"
+      - "%{customer}/%{deployment_tier}.yaml"
+      - "%{customer}/common.yaml"
+       "common.yaml"
