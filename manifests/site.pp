@@ -28,7 +28,15 @@ node default {
   # This is where you can declare classes for all nodes.
   # Example:
   #   class { 'my_class': }
+  if !empty( $facts['application'] ) {
+    $puppet_role=$facts['application']
+    if defined("role::${puppet_role}") {
+      include "role::${puppet_role}"
+    }
+  } else {
+    include role::basic
+  }
 }
 
-# classify nodes via hiera
-contain lookup('classes', Array[String], 'unique', [])
+# or classify nodes via hiera
+# contain lookup('classes', Array[String], 'unique', [])
